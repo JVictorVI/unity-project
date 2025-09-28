@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
@@ -35,5 +36,10 @@ public class MenuController : MonoBehaviour
             exibidorVideo.enabled = true;
             mainMenu.SetActive(true);
         }
+    }
+    
+    public void CarregarCena()
+    {
+        SceneManager.LoadScene("Loading");
     }
 }
