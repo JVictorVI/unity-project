@@ -8,11 +8,8 @@ public class MenuController : MonoBehaviour
 
     public VideoPlayer videoPlayer;
     public RawImage exibidorVideo;
-
     public GameObject mainMenu;
-
     public Animator videoAnimator;
-
     public AudioSource startGameSound;
     public AudioSource mainMenuTheme;
 
@@ -39,7 +36,7 @@ public class MenuController : MonoBehaviour
     }
     
     public void CarregarCena()
-    {
+    {   
         SceneManager.LoadScene("Loading");
     }
 }
