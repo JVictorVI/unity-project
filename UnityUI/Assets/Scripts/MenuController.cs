@@ -9,7 +9,7 @@ public class MenuController : MonoBehaviour
     public VideoPlayer videoPlayer;
     public RawImage exibidorVideo;
     public GameObject mainMenu;
-    public Animator videoAnimator;
+    public Animator videoAnimator, menuAnimator;
     public AudioSource startGameSound;
     public AudioSource mainMenuTheme;
 
@@ -32,6 +32,7 @@ public class MenuController : MonoBehaviour
             mainMenuTheme.Play();
             exibidorVideo.enabled = true;
             mainMenu.SetActive(true);
+            menuAnimator.SetTrigger("ShowMenu");
         }
     }
     
