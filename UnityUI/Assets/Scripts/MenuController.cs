@@ -31,6 +31,7 @@ public class MenuController : MonoBehaviour
             videoAnimator.SetTrigger("StartBackgroundAnimation");
             mainMenuTheme.Play();
             exibidorVideo.enabled = true;
+
             mainMenu.SetActive(true);
             menuAnimator.SetTrigger("ShowMenu");
         }

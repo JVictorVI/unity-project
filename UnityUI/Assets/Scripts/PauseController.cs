@@ -23,14 +23,14 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1; // retoma o tempo do jogo
+        Time.timeScale = 1; 
         isPaused = false;
     }
 
     void Pause()
     {
         pauseMenuUI.SetActive(true);
-        Time.timeScale = 0; // congela o jogo
+        Time.timeScale = 0;
         isPaused = true;
     }
 
