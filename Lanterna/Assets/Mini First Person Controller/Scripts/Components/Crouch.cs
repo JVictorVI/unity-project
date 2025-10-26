@@ -36,6 +36,9 @@ public class Crouch : MonoBehaviour
 
     void LateUpdate()
     {
+        if (PauseController.isPaused)
+            return;
+
         if (Input.GetKey(key))
         {
             // Enforce a low head.

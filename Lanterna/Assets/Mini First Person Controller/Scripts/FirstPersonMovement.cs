@@ -26,6 +26,9 @@ public class FirstPersonMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (PauseController.isPaused)
+            return;
+
         bool segurandoCorrer = Input.GetKey(runningKey);
         bool temStamina = stamina.TemStamina();
 

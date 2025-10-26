@@ -16,6 +16,7 @@ public class StaminaSystem : MonoBehaviour
     public Color corCheia = Color.green;
     public Color corVazia = Color.red;
 
+    public AudioSource personagemCansado;
     private float tempoSemGasto;
     private bool visivel;
     private bool esgotada = false; // flag para bloquear corrida
@@ -36,6 +37,7 @@ public class StaminaSystem : MonoBehaviour
     void Update()
     {
         AtualizarUI();
+        if (PauseController.isPaused) { personagemCansado.Pause(); }
     }
 
     // Indica se o jogador pode correr
@@ -53,6 +55,11 @@ public class StaminaSystem : MonoBehaviour
         // Se zerou a stamina, bloqueia corrida
         if (staminaAtual <= 0f)
             esgotada = true;
+        
+        if (staminaAtual == 0)
+        {
+            personagemCansado.Play();
+        }
     }
 
     public void Recuperar()

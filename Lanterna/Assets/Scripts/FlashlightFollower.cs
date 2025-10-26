@@ -17,6 +17,10 @@ public class FlashlightFollower : MonoBehaviour
 
     void Update()
     {
+        // Bloqueia a rotação da câmera se o jogo estiver pausado
+        if (PauseController.isPaused)
+            return;
+
         // Seguir a posição da câmera
         transform.position = target.position;
 

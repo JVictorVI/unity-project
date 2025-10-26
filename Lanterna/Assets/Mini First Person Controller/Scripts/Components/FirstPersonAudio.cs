@@ -29,6 +29,7 @@ public class FirstPersonAudio : MonoBehaviour
     public AudioSource crouchStartAudio, crouchedAudio, crouchEndAudio;
     public AudioClip[] crouchStartSFX, crouchEndSFX;
 
+    // Todo áudio que precisar se pausado tem que ser vinculado aqui
     AudioSource[] MovingAudios => new AudioSource[] { stepAudio, runningAudio, crouchedAudio };
 
 
@@ -62,8 +63,20 @@ public class FirstPersonAudio : MonoBehaviour
 
     void OnDisable() => UnsubscribeToEvents();
 
+    void Update()
+    {
+        if (PauseController.isPaused)
+        {
+            foreach (var audio in MovingAudios)
+                if (audio != null) audio.Stop();
+            return;
+        }
+    }
+
     void FixedUpdate()
     {
+        
+        
         // Play moving audio if the character is moving and on the ground.
         float velocity = Vector3.Distance(CurrentCharacterPosition, lastCharacterPosition);
         if (velocity >= velocityThreshold && groundCheck && groundCheck.isGrounded)
