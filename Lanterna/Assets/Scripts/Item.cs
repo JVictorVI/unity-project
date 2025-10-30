@@ -5,7 +5,6 @@ using UnityEngine.UI; // se for exibir a contagem na tela
 public class ItemCollector : MonoBehaviour
 {
     private GameObject itemProximo;
-
     public GameObject overlay;
     public OverlayController overlayController;
     public ObjectiveHUDController objectiveHUDController;
