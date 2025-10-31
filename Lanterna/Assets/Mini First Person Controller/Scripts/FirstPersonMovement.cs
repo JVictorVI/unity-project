@@ -24,6 +24,11 @@ public class FirstPersonMovement : MonoBehaviour
         stamina = GetComponent<StaminaSystem>();
     }
 
+    void Update()
+    {
+        if (PauseController.isPaused)
+            return;
+    }
     void FixedUpdate()
     {
         if (PauseController.isPaused)

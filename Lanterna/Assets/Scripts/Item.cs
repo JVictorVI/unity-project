@@ -9,6 +9,8 @@ public class ItemCollector : MonoBehaviour
     public OverlayController overlayController;
     public ObjectiveHUDController objectiveHUDController;
 
+    public NoteReaderController noteReader;
+
     // --- Sistema de objetivos ---
     private int totalPaginas = 2; // Quantidade necessária para completar o objetivo
     private int paginasColetadas = 0;
@@ -23,8 +25,6 @@ public class ItemCollector : MonoBehaviour
 
     void Update()
     {
-        if (PauseController.isPaused)
-            return;
             
         if (itemProximo != null && Input.GetKeyDown(KeyCode.E))
         {
@@ -55,7 +55,13 @@ public class ItemCollector : MonoBehaviour
 
     void ColetarItem(GameObject item)
     {
-        //Debug.Log("Item coletado: " + item.name);
+        // Verifica se o item possui uma nota
+        NoteItem noteItem = item.GetComponent<NoteItem>();
+        if (noteItem != null && noteItem.nota != null)
+        {
+            noteReader.MostrarNota(noteItem.nota.conteudo);
+        }
+
         Destroy(item);
         itemProximo = null;
         overlay.SetActive(false);
@@ -70,6 +76,25 @@ public class ItemCollector : MonoBehaviour
             ObjetivoConcluido();
         }
     }
+
+    /*
+    void ColetarItem(GameObject item)
+    {
+        //Debug.Log("Item coletado: " + item.name);
+        Destroy(item);
+        itemProximo = null;
+        overlay.SetActive(false);
+
+        paginasColetadas++;
+        AtualizarContador();
+
+        objectiveHUDController.showObjective = true;
+
+        if (paginasColetadas >= totalPaginas)
+        {
+            ObjetivoConcluido();
+        }
+    }*/
 
     void AtualizarContador()
     {

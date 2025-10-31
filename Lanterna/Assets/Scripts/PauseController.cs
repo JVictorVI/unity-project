@@ -12,7 +12,7 @@ public class PauseController : MonoBehaviour
     public Volume volume;
     private DepthOfField dof;
 
-    public static bool isPaused { get; private set; } = false;
+    public static bool isPaused { get; set; } = false;
 
     void Start()
     {
@@ -23,8 +23,8 @@ public class PauseController : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {   
+        if (Input.GetKeyDown(KeyCode.Escape) && !NoteReaderController.isReading)
+        {
             if (isPaused)
                 Resume();
             else
@@ -41,9 +41,13 @@ public class PauseController : MonoBehaviour
         dof.active = false;
     }
 
-    void Pause()
+    public void Pause()
     {
-        pauseMenuUI.SetActive(true);
+        if (!NoteReaderController.isReading)
+        {
+            pauseMenuUI.SetActive(true);   
+        }
+        //pauseMenuUI.SetActive(true);
         dof.active = true;
         Time.timeScale = 0;
         isPaused = true;
