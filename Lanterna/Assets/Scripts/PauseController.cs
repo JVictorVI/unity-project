@@ -1,14 +1,13 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 public class PauseController : MonoBehaviour
 {
-    public GameObject pauseMenuUI;
-
+    public GameObject pauseMenuUI, savingBar;
     public AudioSource EnterPause;
     public AudioSource ExitPause;
-
     public Volume volume;
     private DepthOfField dof;
 
@@ -30,6 +29,7 @@ public class PauseController : MonoBehaviour
             else
                 Pause();
         }
+
     }
 
     public void Resume()
@@ -60,6 +60,21 @@ public class PauseController : MonoBehaviour
     {
         Resume();
         SceneManager.LoadSceneAsync("MainMenu");
+    }
+
+    public void SaveManual()
+    {
+        GameManager.Instance.SaveGame();
+        Resume();
+        StartCoroutine(ShowSavingLoad());
+    }
+    
+    public IEnumerator ShowSavingLoad()
+    {
+        savingBar.SetActive(true);
+        yield return new WaitForSeconds(3); 
+        savingBar.SetActive(false);
+
     }
 
     public void QuitGame()

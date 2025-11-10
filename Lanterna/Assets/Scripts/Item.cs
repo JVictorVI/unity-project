@@ -1,5 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI; // se for exibir a contagem na tela
 
 public class ItemCollector : MonoBehaviour
@@ -8,18 +11,47 @@ public class ItemCollector : MonoBehaviour
     public GameObject overlay;
     public OverlayController overlayController;
     public ObjectiveHUDController objectiveHUDController;
-
     public NoteReaderController noteReader;
+
+    public GameObject savingBar;
 
     // --- Sistema de objetivos ---
     private int totalPaginas = 2; // Quantidade necessária para completar o objetivo
     private int paginasColetadas = 0;
+
+    private List<string> itensColetados = new List<string>();
 
     public TextMeshProUGUI objectiveText; // (opcional) texto na tela para mostrar a contagem
 
     void Start()
     {
         overlay.SetActive(false);
+        savingBar.SetActive(false);
+
+        ProgressData data = SaveManager.LoadProgress();
+        if (data != null && data.cenaAtual == SceneManager.GetActiveScene().name)
+        {
+            paginasColetadas = data.paginasColetadas;
+            itensColetados = data.itensColetados ?? new List<string>();
+
+            // Restaurar posição
+            transform.position = new Vector3(
+                data.posicaoJogador[0],
+                data.posicaoJogador[1],
+                data.posicaoJogador[2]
+            );
+
+            // 🔥 Destruir os itens já coletados
+            foreach (CollectibleItem item in FindObjectsOfType<CollectibleItem>())
+            {
+                if (itensColetados.Contains(item.GetID()))
+                {
+                    Destroy(item.gameObject);
+                }
+            }
+        }
+
+
         AtualizarContador();
     }
 
@@ -57,9 +89,19 @@ public class ItemCollector : MonoBehaviour
     {
         // Verifica se o item possui uma nota
         NoteItem noteItem = item.GetComponent<NoteItem>();
+        CollectibleItem collectible = item.GetComponent<CollectibleItem>();
+
         if (noteItem != null && noteItem.nota != null)
         {
             noteReader.MostrarNota(noteItem.nota.conteudo);
+        }
+
+        // Adiciona o ID do item à lista de coletados
+        if (collectible != null)
+        {
+            string id = collectible.GetID();
+            if (!itensColetados.Contains(id))
+                itensColetados.Add(id);
         }
 
         Destroy(item);
@@ -71,10 +113,41 @@ public class ItemCollector : MonoBehaviour
 
         objectiveHUDController.showObjective = true;
 
+        // 🟢 Salvamento automático
+        SaveProgress();
+
         if (paginasColetadas >= totalPaginas)
         {
             ObjetivoConcluido();
         }
+    }
+
+    public void SaveProgress()
+    {
+        ProgressData data = new ProgressData(
+            paginasColetadas,
+            SceneManager.GetActiveScene().name,
+            transform.position,
+            itensColetados
+        );
+
+        SaveManager.SaveProgress(data);
+        StartCoroutine(ShowSavingLoad()); 
+    }
+
+    public IEnumerator ShowSavingLoad()
+    {
+        savingBar.SetActive(true);
+        yield return new WaitForSeconds(3); 
+        savingBar.SetActive(false);
+
+    }
+
+    // Usado pelo GameManager ao continuar o jogo
+    public void CarregarProgresso(int paginas)
+    {
+        paginasColetadas = paginas;
+        AtualizarContador();
     }
 
     /*

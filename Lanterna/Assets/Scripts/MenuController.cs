@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,23 +9,37 @@ public class MenuController : MonoBehaviour
 {
 
     public VideoPlayer videoPlayer;
-
     public RawImage exibicaoVideo;
 
     public GameObject optionsMenu;
+    public GameObject Settings;
 
     public Animator backgroundAnimator;
 
     public AudioSource pressKeySound, mainMenuTheme;
+
+    public SettingsController settingsController;
+
+    public Button newGameButton, continueButton;
+
+    public TextMeshProUGUI newGameButtonText; // arraste seu TextMeshPro aqui
+
+
+    public bool clicked;
     void Start()
     {
+        LoadButtons();
+        settingsController.GetPreferences();
         exibicaoVideo.enabled = false;
         optionsMenu.SetActive(false);
+        Settings.SetActive(false);
+        clicked = false;
+
     }
 
     void Update()
     {
-        if (!videoPlayer.isPlaying && Input.anyKeyDown)
+        if (!videoPlayer.isPlaying && Input.anyKeyDown && !clicked)
         {
             pressKeySound.Play();
             videoPlayer.Play();
@@ -32,6 +47,8 @@ public class MenuController : MonoBehaviour
             backgroundAnimator.SetTrigger("ShowBackground");
             mainMenuTheme.Play();
             optionsMenu.SetActive(true);
+            clicked = true;
+
         }
     }
 
@@ -41,6 +58,57 @@ public class MenuController : MonoBehaviour
         PlayerPrefs.SetString("CenaParaCarregar", cenaAlvo);
         // Vai para a cena de loading
         SceneManager.LoadScene("LoadingScreen");
+    }
+
+    public void NovoJogo(string cenaAlvo)
+    {
+        SaveManager.DeleteProgress();
+        PlayerPrefs.SetString("CenaParaCarregar", cenaAlvo);
+        SceneManager.LoadScene("LoadingScreen");
+    }
+
+    public void Continuar()
+    {
+
+        GameManager.Instance.ContinueGame();
+        
+    }
+
+    public void LoadButtons()
+    {
+
+        if (SaveManager.HasSave())
+        {
+            continueButton.interactable = true;
+            //continueButton.enabled = true;
+            newGameButtonText.text = "Novo jogo";
+        }
+        else
+        {
+            continueButton.interactable = false;
+            //continueButton.enabled = false;
+            newGameButtonText.text = "Iniciar jogo";
+            Debug.Log("Nenhum progresso salvo!");
+        }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void showSettings()
+    {
+        Settings.SetActive(true);
+        optionsMenu.SetActive(false);
+
+    }
+
+    public void hideSettings()
+    {
+        Settings.SetActive(false);
+        optionsMenu.SetActive(true);
+
     }
 
 }
