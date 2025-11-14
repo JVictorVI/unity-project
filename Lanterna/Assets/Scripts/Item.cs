@@ -16,7 +16,7 @@ public class ItemCollector : MonoBehaviour
     public GameObject savingBar;
 
     // --- Sistema de objetivos ---
-    private int totalPaginas = 2; // Quantidade necessária para completar o objetivo
+    private int totalPaginas = 5; // Quantidade necessária para completar o objetivo
     private int paginasColetadas = 0;
 
     private List<string> itensColetados = new List<string>();

@@ -22,6 +22,7 @@ public class FirstPersonMovement : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         stamina = GetComponent<StaminaSystem>();
+        Cursor.visible = false;
     }
 
     void Update()

@@ -34,6 +34,7 @@ public class PauseController : MonoBehaviour
 
     public void Resume()
     {
+        Cursor.visible = false; 
         ExitPause.Play();
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1;
