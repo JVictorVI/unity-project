@@ -28,6 +28,8 @@ public class MenuController : MonoBehaviour
     public bool clicked;
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         LoadButtons();
         settingsController.GetPreferences();
         exibicaoVideo.enabled = false;
