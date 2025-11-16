@@ -39,6 +39,8 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 1;
         isPaused = false;
         dof.active = false;
+        Cursor.visible = false;
+
     }
 
     public void Pause()

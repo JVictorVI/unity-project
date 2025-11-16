@@ -45,7 +45,7 @@ public class GameOverManager : MonoBehaviour
         //Time.timeScale = 1f;
         PauseController.isPaused = false;
 
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //"SceneManager.GetActiveScene().name"
+        SceneManager.LoadScene("LoadingScreen");
     }
 }
