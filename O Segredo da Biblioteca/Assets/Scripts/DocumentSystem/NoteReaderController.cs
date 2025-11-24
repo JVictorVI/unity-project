@@ -8,6 +8,7 @@ public class NoteReaderController : MonoBehaviour
 
     public AudioSource openingPage, closingPage;
 
+    public System.Action onNoteClosed;
     public static bool isReading { get; set; } = false;
 
 
@@ -41,5 +42,6 @@ public class NoteReaderController : MonoBehaviour
         isReading = false;
         NoteReaderUI.SetActive(false);
         PauseController.isPaused = false;
+        onNoteClosed?.Invoke();
     }
 }

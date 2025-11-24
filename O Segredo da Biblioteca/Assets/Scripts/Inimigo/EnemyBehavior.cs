@@ -7,12 +7,13 @@ public class EnemyBehaviorFix : MonoBehaviour
 {
     public Transform player;
     public Transform returnTarget;
+    private Animator animator; // Variável já estava aqui, ótimo!
 
     [Header("Percepção")]
     public float chaseRadius = 10f;
     public float giveUpDistance = 30f;
     public bool requireLineOfSight = true;
-    public LayerMask obstacleMask;      // layers que bloqueiam visão (paredes)
+    public LayerMask obstacleMask;       // layers que bloqueiam visão (paredes)
     public float loseSightTime = 2.0f;
 
     [Header("Agent tune")]
@@ -48,6 +49,7 @@ public class EnemyBehaviorFix : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>(); // Você já tinha pego o Animator aqui
         if (player == null)
         {
             var p = GameObject.FindGameObjectWithTag("Player");
@@ -69,6 +71,24 @@ public class EnemyBehaviorFix : MonoBehaviour
 
         if (!agent.isOnNavMesh && autoRepairIfOffMesh) TryRepairAgent();
 
+        
+        // ==========================================================
+        // == INÍCIO DO BLOCO DE ANIMAÇÃO ==
+        // ==========================================================
+        if (animator != null && agent != null && agent.isOnNavMesh)
+        {
+            // Pega a velocidade atual do agente. 
+            // Se for maior que um valor pequeno (ex: 0.1f), ele está se movendo.
+            bool isMoving = agent.velocity.magnitude > 0.1f;
+
+            // Envia o valor (true ou false) para o parâmetro "IsMoving" do Animator
+            animator.SetBool("IsMoving", isMoving);
+        }
+        // ==========================================================
+        // == FIM DO BLOCO DE ANIMAÇÃO ==
+        // ==========================================================
+
+
         switch (state)
         {
             case State.Idle: UpdateIdle(); break;
@@ -87,7 +107,7 @@ public class EnemyBehaviorFix : MonoBehaviour
             {
                 lastSeenTime = Time.time;
                 state = State.Chase;
-           //     if (debugDraw) Debug.Log("[E-Fix] Start Chase (Idle->Chase)");
+            //    if (debugDraw) Debug.Log("[E-Fix] Start Chase (Idle->Chase)");
             }
         }
     }
@@ -101,7 +121,7 @@ public class EnemyBehaviorFix : MonoBehaviour
         // hard give up if too far
         if (sqrDist > giveUpDistance * giveUpDistance)
         {
-          //  if (debugDraw) Debug.Log("[E-Fix] giveUpDistance reached -> Return");
+        //  if (debugDraw) Debug.Log("[E-Fix] giveUpDistance reached -> Return");
             StartReturn();
             return;
         }
@@ -115,10 +135,10 @@ public class EnemyBehaviorFix : MonoBehaviour
         else
         {
             float lostFor = Time.time - lastSeenTime;
-          //  if (debugDraw) Debug.Log($"[E-Fix] LOS=false lostFor={lostFor:F2}s (limit {loseSightTime}s)");
+        //  if (debugDraw) Debug.Log($"[E-Fix] LOS=false lostFor={lostFor:F2}s (limit {loseSightTime}s)");
             if (lostFor > loseSightTime)
             {
-          //      if (debugDraw) Debug.Log("[E-Fix] Lost sight long enough -> Return");
+        //      if (debugDraw) Debug.Log("[E-Fix] Lost sight long enough -> Return");
                 StartReturn();
                 return;
             }
@@ -133,11 +153,11 @@ public class EnemyBehaviorFix : MonoBehaviour
             if (path.status == NavMeshPathStatus.PathComplete)
             {
                 agent.SetPath(path);
-             //   if (debugDraw) Debug.Log($"[E-Fix] PathComplete -> chasing. path.corners={path.corners.Length}");
+            //    if (debugDraw) Debug.Log($"[E-Fix] PathComplete -> chasing. path.corners={path.corners.Length}");
             }
             else
             {
-             //   if (debugDraw) Debug.Log($"[E-Fix] Path status: {path.status} -> trying sample pos near player");
+            //    if (debugDraw) Debug.Log($"[E-Fix] Path status: {path.status} -> trying sample pos near player");
                 // try to sample a nearby reachable point around player
                 if (NavMesh.SamplePosition(player.position, out NavMeshHit hit, 4.0f, NavMesh.AllAreas))
                 {
@@ -146,17 +166,17 @@ public class EnemyBehaviorFix : MonoBehaviour
                     if (p2.status == NavMeshPathStatus.PathComplete)
                     {
                         agent.SetPath(p2);
-                     //   if (debugDraw) Debug.Log("[E-Fix] Found path to sampled player position -> chasing to sample");
+                    //    if (debugDraw) Debug.Log("[E-Fix] Found path to sampled player position -> chasing to sample");
                     }
                     else
                     {
-                   //     if (debugDraw) Debug.Log("[E-Fix] Sampled point path invalid -> will give up soon if still unreachable");
+                    //    if (debugDraw) Debug.Log("[E-Fix] Sampled point path invalid -> will give up soon if still unreachable");
                         // if unreachable for long enough, forget (handled by lastSeenTime timeout)
                     }
                 }
                 else
                 {
-                   // if (debugDraw) Debug.Log("[E-Fix] No sampled navmesh near player");
+                // if (debugDraw) Debug.Log("[E-Fix] No sampled navmesh near player");
                 }
             }
         }
@@ -218,11 +238,11 @@ public class EnemyBehaviorFix : MonoBehaviour
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, sampleRadius, NavMesh.AllAreas))
         {
             agent.Warp(hit.position);
-            //if (debugDraw) Debug.Log($"[E-Fix] Warped to navmesh: {hit.position}");
+            //if (debugDraw) Debug.Log($"[E-To-Navmesh] Warped to navmesh: {hit.position}");
         }
         else
         {
-            //if (debugDraw) Debug.LogWarning("[E-Fix] No NavMesh near to warp");
+            //if (debugDraw) Debug.LogWarning("[E-To-Navmesh] No NavMesh near to warp");
         }
     }
 }
