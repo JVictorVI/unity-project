@@ -12,7 +12,6 @@ public class ItemCollector : MonoBehaviour
     public OverlayController overlayController;
     public ObjectiveHUDController objectiveHUDController;
     public NoteReaderController noteReader;
-
     public AudioSource RadioSound, DialogSound;
 
     public GameObject savingBar;
@@ -143,13 +142,14 @@ public class ItemCollector : MonoBehaviour
             D6.UnPause();
         }
 
+        /*
         if (collectedBook)
         {
             conjuntoPaginas.SetActive(true);
         } else
         {
             conjuntoPaginas.SetActive(false);
-        }
+        }*/
 
     }
 
@@ -230,7 +230,7 @@ public class ItemCollector : MonoBehaviour
     // —— 2) Se tiver nota, abre no leitor ——
     if (noteItem != null && noteItem.nota != null)
     {
-        noteReader.MostrarNota(noteItem.nota.conteudo);
+        noteReader.MostrarNota(noteItem.nota.imagemPagina);
 
         // Salvar ID temporariamente
         if (collectible != null)
