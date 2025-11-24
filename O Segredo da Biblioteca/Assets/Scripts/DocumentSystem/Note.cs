@@ -6,6 +6,8 @@ public class Note : ScriptableObject
 
     [TextArea(4, 10)]
     public string conteudo;
+
+    public Sprite imagemPagina;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
