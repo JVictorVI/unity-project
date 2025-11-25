@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbebad071e852c8418d63ed5692ad6f4, type: 3}
+  m_Name: Pag1
+  m_EditorClassIdentifier: Assembly-CSharp::Note
+  conteudo: "\"Quando o Primeiro Erudito viu que o conhecimento do mundo crescia
+    mais r\xE1pido do que sua capacidade de cont\xEA-lo, ele moldou um recept\xE1culo
+    para guardar o indiz\xEDvel.\" \n\n\"Assim nasceu o Codex Aeternum, encadernado
+    em pele que n\xE3o envelhece e escrito com tinta que respira. Este livro n\xE3o
+    \xE9 um registro: \xE9 um pacto. Cada palavra nele gravada existe com vontade
+    pr\xF3pria, e aquele que abrir suas p\xE1ginas dever\xE1 faz\xEA-lo com o cora\xE7\xE3o
+    firme, pois o saber que n\xE3o admite esquecimento cobra seu pre\xE7o.\"\n\n\"Os
+    s\xE9culos passaram, mas o Codex nunca permaneceu esquecido por muito tempo.
+    Ele chama. Ele responde. Ele escolhe seus leitores\u2026 e os consome em sil\xEAncio.\""
+  imagemPagina: {fileID: 21300000, guid: 94802433c2f8e124ca68e48a48b34d7a, type: 3}

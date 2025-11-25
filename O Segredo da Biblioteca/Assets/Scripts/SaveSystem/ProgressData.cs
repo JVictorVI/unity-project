@@ -10,11 +10,32 @@ public class ProgressData
 
     public List<string> itensColetados = new List<string>();
 
-    public ProgressData(int paginas, string cena, Vector3 posicao, List<string> itens)
+    // 🔥 Novas variáveis para salvar progresso do rádio e livro
+    public bool collectedRadio;
+    public bool collectedBook;
+
+    public ProgressData(
+        int paginas,
+        string cena,
+        Vector3 posicao,
+        List<string> itens,
+        bool radio,
+        bool book
+    )
     {
         paginasColetadas = paginas;
         cenaAtual = cena;
-        posicaoJogador = new float[3] { posicao.x, posicao.y, posicao.z };
+        
+        posicaoJogador = new float[3]
+        {
+            posicao.x,
+            posicao.y,
+            posicao.z
+        };
+
         itensColetados = itens;
+
+        collectedRadio = radio;
+        collectedBook = book;
     }
 }

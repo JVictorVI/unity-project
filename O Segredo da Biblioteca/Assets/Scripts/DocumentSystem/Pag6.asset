@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbebad071e852c8418d63ed5692ad6f4, type: 3}
+  m_Name: Pag6
+  m_EditorClassIdentifier: Assembly-CSharp::Note
+  conteudo: "\"Este \xE9 o \xFAltimo aviso deixado pelos poucos s\xE1bios que ainda
+    respiravam ap\xF3s estudar o Codex: nenhum poder presente nestas p\xE1ginas \xE9
+    gratuito. N\xE3o existe ritual sem custo, nem conhecimento sem d\xEDvida.\"\n\r\n\"Os
+    que buscam o Codex por ambi\xE7\xE3o logo descobrem que ele molda o destino do
+    leitor. Cada p\xE1gina arrancada, cada feiti\xE7o pronunciado, cada olhar lan\xE7ado
+    entre suas linhas aproxima o portador de um fim inevit\xE1vel.\"\n\r\n\"Aquele
+    que reunificar o livro ter\xE1 em m\xE3os a for\xE7a para moldar mundos\u2026
+    ou para destru\xED-los. Mas tamb\xE9m despertar\xE1 o olhar daqueles que jamais
+    abandonaram a vig\xEDlia. Eles vir\xE3o. Eles sempre v\xEAm.\"\n\r\n\"A escolha
+    do portador determinar\xE1 se este ser\xE1 lembrado como guardi\xE3o\u2026 ou
+    traidor.\""
+  imagemPagina: {fileID: 21300000, guid: e3c09f338ddf96f418fb4deff52c5152, type: 3}

@@ -5,7 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Item
-  - TV
+  - Radio
+  - Book
+  - Door
   layers:
   - Default
   - TransparentFX

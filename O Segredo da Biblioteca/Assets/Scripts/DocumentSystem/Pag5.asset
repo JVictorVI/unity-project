@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbebad071e852c8418d63ed5692ad6f4, type: 3}
+  m_Name: Pag5
+  m_EditorClassIdentifier: Assembly-CSharp::Note
+  conteudo: "\"Dentre os rituais proibidos do Codex, a Palavra Fraturada \xE9 o mais
+    sedutor. Aquele que domina a entona\xE7\xE3o correta pode influenciar a vontade
+    de outros, dobrando o pensamento alheio como se fosse papel \xFAmido.\"\n\r\nInstru\xE7\xF5es:\r\n\nI.
+    Em absoluto sil\xEAncio, escreva o nome do alvo em superf\xEDcie lisa.\r\n\r\nII.
+    Divida mentalmente o nome em tr\xEAs partes e repita cada fragmento ao ritmo
+    da pr\xF3pria respira\xE7\xE3o.\r\n\r\nIII. Ao terminar, quebre o objeto onde
+    o nome foi escrito.\r\n\r\n \"O ritual concede dom\xEDnio, mas nunca gratid\xE3o.
+    Os que s\xE3o afetados pela Palavra Fraturada sentem profundo mal-estar e uma
+    sensa\xE7\xE3o de perda. Alguns acreditam que parte do pr\xF3prio esp\xEDrito
+    \xE9 arrancado neste processo.\""
+  imagemPagina: {fileID: 21300000, guid: 0aa23b1052401ab49afa3236928cbc04, type: 3}

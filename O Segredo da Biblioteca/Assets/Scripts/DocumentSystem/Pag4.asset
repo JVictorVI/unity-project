@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbebad071e852c8418d63ed5692ad6f4, type: 3}
+  m_Name: Pag4
+  m_EditorClassIdentifier: Assembly-CSharp::Note
+  conteudo: "\"Para que o Codex n\xE3o ca\xEDsse em m\xE3os indignas, a Ordem do
+    Sil\xEAncio instituiu Guardi\xF5es. Escolhidos desde crian\xE7as, treinados para
+    renunciar a nome, rosto e desejo, eles dedicaram suas vidas ao voto de prote\xE7\xE3o.\"\n\r\n\"Nenhum
+    guardi\xE3o vencia o tempo. Quando a carne falhava, o ritual da Metamorfose era
+    realizado. O corpo tornava-se casca, e a alma permanecia presa, contorcida, mas
+    fiel. Assim nasciam os Sentinelas \u2014 criaturas distorcidas, mas eternamente
+    ligadas ao dever de proteger aquilo que jamais deveria ser lido.\"\n\r\n\"Pena
+    que alguns guardi\xF5es morreram tarde demais\u2026 e o livro foi aberto.\""
+  imagemPagina: {fileID: 21300000, guid: 9e5029c6b9654db499af595b0559ba3a, type: 3}
