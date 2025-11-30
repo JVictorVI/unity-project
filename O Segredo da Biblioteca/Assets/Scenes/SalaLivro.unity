@@ -4126,6 +4126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverManager
   gameOverPanel: {fileID: 0}
+  gameOverSoundEffect: {fileID: 0}
   pauseOnGameOver: 1
 --- !u!1 &611734317
 GameObject:
@@ -8943,6 +8944,7 @@ MonoBehaviour:
   noteReader: {fileID: 1921964430}
   RadioSound: {fileID: 808186725}
   DialogSound: {fileID: 2089259536}
+  ultimaPagina: {fileID: 1792473973}
   savingBar: {fileID: 733522493}
   objectiveText: {fileID: 308030979}
   conjuntoPaginas: {fileID: 1792473973}

@@ -17,6 +17,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SalaLivro.unity
     guid: ee20a7debea4bd844b60edff1900dde5
+  - enabled: 1
+    path: Assets/Scenes/GoodEnding.unity
+    guid: bdcf5d94bc4b3a44dab042a4ec08b7d9
+  - enabled: 1
+    path: "Assets/Scenes/Come\xE7o.unity"
+    guid: 3dba366dcbdbb1841b24b756a0cc2133
+  - enabled: 1
+    path: Assets/Scenes/EstudoInsano.unity
+    guid: 984064d31bcf84444beb87da34ba144f
+  - enabled: 1
+    path: Assets/Scenes/BadEnding.unity
+    guid: e7ddaafa929a6994dab79bdabdc3b35f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

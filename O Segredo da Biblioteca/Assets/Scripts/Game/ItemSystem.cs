@@ -14,10 +14,12 @@ public class ItemCollector : MonoBehaviour
     public NoteReaderController noteReader;
     public AudioSource RadioSound, DialogSound;
 
+    public GameObject ultimaPagina;
+
     public GameObject savingBar;
 
     // --- Sistema de objetivos ---
-    private int totalPaginas = 6; // Quantidade necessária para completar o objetivo
+    private int totalPaginas = 8; // Quantidade necessária para completar o objetivo
     private int paginasColetadas = 0;
 
     private List<string> itensColetados = new List<string>();
@@ -27,15 +29,17 @@ public class ItemCollector : MonoBehaviour
     private bool collectedRadio = false;
     private bool collectedBook = false;
 
-    public GameObject conjuntoPaginas;
+    public GameObject conjuntoPaginas, canvasFinal;
 
-    public AudioSource D1, D2, D3, D4, D5, D6;
+    public AudioSource D1, D2, D3, D4, D5, D6, D7;
 
     void Start()
     {
     
     overlay.SetActive(false);
     savingBar.SetActive(false);
+    ultimaPagina.SetActive(false);
+    canvasFinal.SetActive(false);
 
     ProgressData data = SaveManager.LoadProgress();
     string cenaAtual = SceneManager.GetActiveScene().name;
@@ -114,7 +118,12 @@ public class ItemCollector : MonoBehaviour
 
     void Update()
     {
-            
+        
+        if (!collectedBook)
+        {
+            ObjetivoInicial();
+        }
+
         if (itemProximo != null && Input.GetKeyDown(KeyCode.E))
         {
             ColetarItem(itemProximo);
@@ -151,6 +160,16 @@ public class ItemCollector : MonoBehaviour
             conjuntoPaginas.SetActive(false);
         }*/
 
+        if (paginasColetadas >= 7)
+        {
+            ultimaPagina.SetActive(true);
+        }
+
+        if (paginasColetadas >= totalPaginas)
+        {
+            ObjetivoConcluido();
+        }
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -176,6 +195,13 @@ public class ItemCollector : MonoBehaviour
             overlay.SetActive(true);
         }
 
+        if (other.CompareTag("Fim") && paginasColetadas == 0)
+        {
+            itemProximo = other.gameObject;
+            overlayController.MostrarMensagem("Pressione E para sair");
+            overlay.SetActive(true);
+        }
+
         if (other.CompareTag("Door") &&
         (
             SceneManager.GetActiveScene().name == "CenaPrincipal" ||
@@ -191,7 +217,7 @@ public class ItemCollector : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Item") || other.CompareTag("Radio") || other.CompareTag("Book") || other.CompareTag("Door"))
+        if (other.CompareTag("Item") || other.CompareTag("Radio") || other.CompareTag("Book") || other.CompareTag("Door") || other.CompareTag("Fim"))
         {
             if (itemProximo == other.gameObject)
                 itemProximo = null;
@@ -220,6 +246,9 @@ public class ItemCollector : MonoBehaviour
             break;
         case "Door":
             HandleDoorInteraction();
+            break;
+        case "Fim":
+            EscolherFinais();
             break;
         case "Item":   // páginas
         default:
@@ -274,6 +303,26 @@ public class ItemCollector : MonoBehaviour
         }
     }
 
+    public void EscolherFinais()
+    {
+        D7.Play();
+        StartCoroutine(EsperarAudio());
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    private IEnumerator EsperarAudio()
+    {
+        // espera enquanto está tocando
+        while (D7.isPlaying)
+        {
+            yield return null;
+        }
+
+        // quando acabar, mostra o canvas
+        canvasFinal.SetActive(true);
+    }
+
     void PlayDialog(string id)
     {
         if(id == "pag1")
@@ -316,7 +365,6 @@ public class ItemCollector : MonoBehaviour
         SaveManager.SaveProgress(data);
         StartCoroutine(ShowSavingLoad()); 
     }
-
     public IEnumerator ShowSavingLoad()
     {
         savingBar.SetActive(true);
@@ -376,10 +424,15 @@ public class ItemCollector : MonoBehaviour
         }
     }
 
+    void ObjetivoInicial()
+    {
+        objectiveText.text = "Fuja do monstro";
+    }
+
     void ObjetivoConcluido()
     {
-        objectiveHUDController.showObjective = true;
-        objectiveText.text = "Todas as páginas foram coletadas";
+        //objectiveHUDController.showObjective = true;
+        objectiveText.text = "Encontre-se com Helena na saída";
         //Debug.Log("Você coletou todas as páginas!");
         //overlay.SetActive(true);
         // Aqui você pode adicionar algo como:

@@ -5,6 +5,7 @@ public class GameOverManager : MonoBehaviour
 {
     public static GameOverManager Instance { get; private set; }
     public GameObject gameOverPanel;
+    public AudioSource gameOverSoundEffect;
     public bool pauseOnGameOver = true;
 
     void Awake()
@@ -23,6 +24,7 @@ public class GameOverManager : MonoBehaviour
         Cursor.visible = true;
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);
+            gameOverSoundEffect.Play();
 
         PauseController.isPaused = true;
 

@@ -45,8 +45,10 @@ namespace TMPro.Examples
         // Controls for Touches on Mobile devices
         //private float prev_ZoomDelta;
 
+
         private const string event_SmoothingValue = "Slider - Smoothing Value";
         private const string event_FollowDistance = "Slider - Camera Zoom";
+
 
         void Awake()
         {
@@ -73,18 +75,12 @@ namespace TMPro.Examples
                 CameraTarget = dummyTarget;
             }
         }
-        
 
         // Update is called once per frame
         void LateUpdate()
         {
-
-            // Se o jogo estiver pausado ou lendo uma nota, a câmera não deve atualizar
-            // Se estamos lendo uma nota, não faz nada
-            if (PauseController.isPaused)
-                return;
-        
             GetPlayerInput();
+
 
             // Check if we still have a valid target
             if (CameraTarget != null)
@@ -129,10 +125,6 @@ namespace TMPro.Examples
 
         void GetPlayerInput()
         {
-
-            if (PauseController.isPaused)
-                return;
-
             moveVector = Vector3.zero;
 
             // Check Mouse Wheel Input prior to Shift Key so we can apply multiplier on Shift for Scrolling
