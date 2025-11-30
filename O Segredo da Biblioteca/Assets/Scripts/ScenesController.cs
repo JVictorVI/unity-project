@@ -3,7 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagement : MonoBehaviour
 {
-    public float tempoParaTrocar = 28f; 
+    public float tempoParaTrocar; 
+    public string cenaParaTocar;
 
     void Start()
     {
@@ -12,7 +13,7 @@ public class SceneManagement : MonoBehaviour
 
     void TrocarCena()
     {
-        PlayerPrefs.SetString("CenaParaCarregar", "CenaPrincipal");   
-        SceneManager.LoadScene("LoadingScreen");
+        //PlayerPrefs.SetString("CenaParaCarregar", "EstudoInsano");   
+        SceneManager.LoadSceneAsync(cenaParaTocar);
     }
 }
