@@ -8946,14 +8946,23 @@ MonoBehaviour:
   DialogSound: {fileID: 2089259536}
   ultimaPagina: {fileID: 1792473973}
   savingBar: {fileID: 733522493}
+  helena: {fileID: 1792473973}
   objectiveText: {fileID: 308030979}
   conjuntoPaginas: {fileID: 1792473973}
+  canvasFinal: {fileID: 1792473973}
+  DInicial: {fileID: 978675446}
   D1: {fileID: 595504893}
   D2: {fileID: 1339131388}
   D3: {fileID: 1587685918}
   D4: {fileID: 242379332}
   D5: {fileID: 298824092}
   D6: {fileID: 978675446}
+  D7: {fileID: 978675446}
+  Monstro1: {fileID: 1792473973}
+  Monstro2: {fileID: 1792473973}
+  Porta: {fileID: 1792473973}
+  ComponenteVozMulherFalandoInicio: {fileID: 1792473973}
+  TriggerDaMulherFalandoInicial: {fileID: 1792473973}
 --- !u!114 &1322903377 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114963311885979670, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
@@ -11429,7 +11438,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1921964430}
         m_TargetAssemblyTypeName: NoteReaderController, Assembly-CSharp
         m_MethodName: FecharNota
         m_Mode: 1

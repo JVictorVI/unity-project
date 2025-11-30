@@ -14,13 +14,16 @@ public class ProgressData
     public bool collectedRadio;
     public bool collectedBook;
 
+    public bool jaFalouDialogoInicial;
+
     public ProgressData(
         int paginas,
         string cena,
         Vector3 posicao,
         List<string> itens,
         bool radio,
-        bool book
+        bool book,
+        bool jaFalou
     )
     {
         paginasColetadas = paginas;
@@ -37,5 +40,7 @@ public class ProgressData
 
         collectedRadio = radio;
         collectedBook = book;
+
+        jaFalouDialogoInicial = jaFalou;
     }
 }

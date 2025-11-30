@@ -13,7 +13,7 @@ public class SceneManagement : MonoBehaviour
 
     void TrocarCena()
     {
-        //PlayerPrefs.SetString("CenaParaCarregar", "EstudoInsano");   
+        PlayerPrefs.SetString("CenaParaCarregar", "CenaPrincipal");   
         SceneManager.LoadSceneAsync(cenaParaTocar);
     }
 }

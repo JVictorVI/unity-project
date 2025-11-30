@@ -9,6 +9,7 @@ TagManager:
   - Book
   - Door
   - Fim
+  - PrimeiroDialogo
   layers:
   - Default
   - TransparentFX

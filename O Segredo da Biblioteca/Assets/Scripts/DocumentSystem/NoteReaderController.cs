@@ -50,5 +50,6 @@ public class NoteReaderController : MonoBehaviour
         NoteReaderUI.SetActive(false);
         PauseController.isPaused = false;
         onNoteClosed?.Invoke();
+        Cursor.visible = false;
     }
 }

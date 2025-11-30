@@ -13,10 +13,11 @@ public class ItemCollector : MonoBehaviour
     public ObjectiveHUDController objectiveHUDController;
     public NoteReaderController noteReader;
     public AudioSource RadioSound, DialogSound;
-
     public GameObject ultimaPagina;
 
     public GameObject savingBar;
+
+    public GameObject helena;
 
     // --- Sistema de objetivos ---
     private int totalPaginas = 8; // Quantidade necessária para completar o objetivo
@@ -29,10 +30,14 @@ public class ItemCollector : MonoBehaviour
     private bool collectedRadio = false;
     private bool collectedBook = false;
 
+    private bool jaFalouDialogoInicial = false;
+
     public GameObject conjuntoPaginas, canvasFinal;
 
-    public AudioSource D1, D2, D3, D4, D5, D6, D7;
+    public AudioSource DInicial, D1, D2, D3, D4, D5, D6, D7;
 
+    public GameObject Monstro1, Monstro2, Porta;
+    public GameObject ComponenteVozMulherFalandoInicio, TriggerDaMulherFalandoInicial;
     void Start()
     {
     
@@ -52,6 +57,7 @@ public class ItemCollector : MonoBehaviour
         itensColetados = data.itensColetados ?? new List<string>();
         collectedRadio = data.collectedRadio;
         collectedBook = data.collectedBook;
+        jaFalouDialogoInicial = data.jaFalouDialogoInicial;
 
         // Remover itens já coletados
         foreach (CollectibleItem item in FindObjectsOfType<CollectibleItem>())
@@ -70,7 +76,6 @@ public class ItemCollector : MonoBehaviour
                 transform.position = spawn.transform.position;
 
             AtualizarContador();
-            return;
         }
 
         // -----------------------------------------------------
@@ -86,7 +91,6 @@ public class ItemCollector : MonoBehaviour
                 {
                     transform.position = spawn.transform.position;
                     AtualizarContador();
-                    return;
                 }
             }
         }
@@ -111,6 +115,31 @@ public class ItemCollector : MonoBehaviour
         }
     }
 
+    if (jaFalouDialogoInicial)
+        {
+            // estes já devem estar ATIVOS
+            Monstro1.SetActive(true);
+            Monstro2.SetActive(true);
+            Porta.SetActive(true);
+
+            // estes devem ser DELETADOS
+            if (ComponenteVozMulherFalandoInicio != null)
+                ComponenteVozMulherFalandoInicio.SetActive(false);
+
+            if (TriggerDaMulherFalandoInicial != null)
+                TriggerDaMulherFalandoInicial.SetActive(false);
+
+            helena.SetActive(false);
+        }
+        else
+        {
+            // se ainda não falou, deixa tudo desativado
+            Monstro1.SetActive(false);
+            Monstro2.SetActive(false);
+            Porta.SetActive(false);
+        }
+
+
     AtualizarContador();
     }
 
@@ -122,6 +151,11 @@ public class ItemCollector : MonoBehaviour
         if (!collectedBook)
         {
             ObjetivoInicial();
+        }
+
+        if (!collectedBook && jaFalouDialogoInicial)
+        {
+             objectiveText.text = "Fuja do Monstro";;
         }
 
         if (itemProximo != null && Input.GetKeyDown(KeyCode.E))
@@ -151,14 +185,14 @@ public class ItemCollector : MonoBehaviour
             D6.UnPause();
         }
 
-        /*
+        
         if (collectedBook)
         {
             conjuntoPaginas.SetActive(true);
         } else
         {
             conjuntoPaginas.SetActive(false);
-        }*/
+        }
 
         if (paginasColetadas >= 7)
         {
@@ -168,6 +202,17 @@ public class ItemCollector : MonoBehaviour
         if (paginasColetadas >= totalPaginas)
         {
             ObjetivoConcluido();
+        }
+
+        if (jaFalouDialogoInicial) {
+                Monstro1.SetActive(true);
+                Monstro2.SetActive(true);
+                Porta.SetActive(true);
+        } else
+        {
+                Monstro1.SetActive(false);
+                Monstro2.SetActive(false);
+                Porta.SetActive(false);
         }
 
     }
@@ -195,10 +240,17 @@ public class ItemCollector : MonoBehaviour
             overlay.SetActive(true);
         }
 
-        if (other.CompareTag("Fim") && paginasColetadas == 0)
+        if (other.CompareTag("Fim") && paginasColetadas == 8)
         {
             itemProximo = other.gameObject;
             overlayController.MostrarMensagem("Pressione E para sair");
+            overlay.SetActive(true);
+        }
+
+        if (other.CompareTag("PrimeiroDialogo"))
+        {
+            itemProximo = other.gameObject;
+            overlayController.MostrarMensagem("Pressione E para falar");
             overlay.SetActive(true);
         }
 
@@ -217,7 +269,7 @@ public class ItemCollector : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Item") || other.CompareTag("Radio") || other.CompareTag("Book") || other.CompareTag("Door") || other.CompareTag("Fim"))
+        if (other.CompareTag("Item") || other.CompareTag("Radio") || other.CompareTag("Book") || other.CompareTag("Door") || other.CompareTag("Fim") || other.CompareTag("PrimeiroDialogo"))
         {
             if (itemProximo == other.gameObject)
                 itemProximo = null;
@@ -249,6 +301,9 @@ public class ItemCollector : MonoBehaviour
             break;
         case "Fim":
             EscolherFinais();
+            break;
+        case "PrimeiroDialogo":
+            TocarPrimeiroDialogo();
             break;
         case "Item":   // páginas
         default:
@@ -359,7 +414,8 @@ public class ItemCollector : MonoBehaviour
             transform.position,
             itensColetados,
             collectedRadio,   // salvar estado do rádio
-            collectedBook 
+            collectedBook,
+            jaFalouDialogoInicial
         );
 
         SaveManager.SaveProgress(data);
@@ -402,6 +458,23 @@ public class ItemCollector : MonoBehaviour
         // Nada especial, apenas registra e avança objetivo.
     }
 
+    /*
+    void HandlePagePickup(GameObject item)
+    {
+        paginasColetadas++;
+        AtualizarContador();
+
+        // Pega o script da página coletada
+        PageSpawnPoint p = item.GetComponent<PageSpawnPoint>();
+
+        if (p != null && p.spawnPoint != null)
+        {
+            // move o monstro até o ponto definido
+            Monstro1.transform.position = p.spawnPoint.transform.position;
+            Monstro1.SetActive(true);
+        }
+    } */
+
     void HandleDoorInteraction()
     {
         if (SceneManager.GetActiveScene().name == "CenaPrincipal")
@@ -426,7 +499,7 @@ public class ItemCollector : MonoBehaviour
 
     void ObjetivoInicial()
     {
-        objectiveText.text = "Fuja do monstro";
+        objectiveText.text = "Encontre uma forma de sair da biblioteca";
     }
 
     void ObjetivoConcluido()
@@ -441,4 +514,28 @@ public class ItemCollector : MonoBehaviour
         // - Mudar de cena
         // - Mostrar uma tela de vitória
     }
+
+    public void TocarPrimeiroDialogo()
+    {
+        StartCoroutine(TocarDepoisDoDialogo());
+    }
+
+    private IEnumerator TocarDepoisDoDialogo()
+    {        
+        ComponenteVozMulherFalandoInicio.SetActive(false);
+        TriggerDaMulherFalandoInicial.SetActive(false);
+        DInicial.Play();
+
+        // espera o áudio terminar
+        yield return new WaitForSeconds(DInicial.clip.length);
+        jaFalouDialogoInicial = true;
+
+        yield return new WaitForSeconds(3);
+        helena.SetActive(false);
+
+        SaveProgress();
+        
+    }
+
+
 }
