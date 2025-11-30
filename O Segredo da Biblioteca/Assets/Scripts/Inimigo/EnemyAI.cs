@@ -31,6 +31,11 @@ public class EnemyAI : MonoBehaviour
     public bool autoRepairIfOffMesh = true;
     public float sampleRadius = 5f;
 
+    private FootstepController footstepController;
+    private EnemyRoarOnDetect roarController;
+    private EnemyChaseMusic chaseMusic;
+
+
     NavMeshAgent agent;
     float lastSeenTime = -999f;
     Vector3 startPosition;
@@ -47,6 +52,10 @@ public class EnemyAI : MonoBehaviour
         agent.autoRepath = autoRepath;
 
         startPosition = transform.position;
+        footstepController = GetComponent<FootstepController>(); // pega o script de passos
+        roarController = GetComponent<EnemyRoarOnDetect>();
+        chaseMusic = GetComponent<EnemyChaseMusic>();
+
     }
 
     void Start()
@@ -71,9 +80,14 @@ public class EnemyAI : MonoBehaviour
         if (!agent.isOnNavMesh && autoRepairIfOffMesh)
             TryRepairAgent();
 
-        // animação simples de movimento
+        bool isMoving = agent.velocity.sqrMagnitude > 0.02f; // sensível
         if (animator != null)
-            animator.SetBool("IsMoving", agent.velocity.magnitude > 0.1f);
+            animator.SetBool("IsMoving", isMoving);
+
+        // --- PASSOS ---
+        if (footstepController != null)
+            footstepController.HandleFootsteps(isMoving, agent.velocity.magnitude);
+        // --------------
 
         switch (state)
         {
@@ -91,6 +105,15 @@ public class EnemyAI : MonoBehaviour
         if (player != null && InChaseRange() && HasLineOfSightOrNotRequired())
         {
             lastSeenTime = Time.time;
+            
+            // --- RUGIDO DE DETECÇÃO ---
+            if (roarController != null)
+                roarController.PlayRoar();
+            // ---------------------------
+
+            if (chaseMusic != null)
+                chaseMusic.PlayChaseMusic();
+
             state = State.Chase;
             return;
         }
@@ -199,6 +222,12 @@ public class EnemyAI : MonoBehaviour
     void StartReturn()
     {
         state = State.Return;
+        if (roarController != null)
+            roarController.ResetRoar();
+
+        if (chaseMusic != null)
+            chaseMusic.StopChaseMusic();
+
     }
 
     void OnCatch()
