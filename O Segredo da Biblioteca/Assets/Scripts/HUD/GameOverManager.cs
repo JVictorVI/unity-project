@@ -18,36 +18,49 @@ public class GameOverManager : MonoBehaviour
         Instance = this;
     }
 
+    void Update()
+    {
+        // Verifica se o painel está ativo ANTES de reiniciar
+        if (Input.GetButtonDown("Fire1") && gameOverPanel != null && gameOverPanel.activeSelf)
+        {
+            RestartScene();
+        }
+    }
+
     public void ShowGameOver()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
         if (gameOverPanel != null)
+        {
             gameOverPanel.SetActive(true);
-            gameOverSoundEffect.Play();
+
+            if (gameOverSoundEffect != null)
+                gameOverSoundEffect.Play();
+        }
 
         PauseController.isPaused = true;
 
-       // if (pauseOnGameOver)
-       //     Time.timeScale = 0f;
+        // if (pauseOnGameOver)
+        //     Time.timeScale = 0f;
     }
 
     public void HideGameOver()
     {
         Cursor.visible = false;
+
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
-       // if (pauseOnGameOver)
-          //  Time.timeScale = 1f;
+        // if (pauseOnGameOver)
+        //     Time.timeScale = 1f;
     }
 
     public void RestartScene()
     {
-        //Time.timeScale = 1f;
         PauseController.isPaused = false;
 
-        //"SceneManager.GetActiveScene().name"
         SceneManager.LoadScene("LoadingScreen");
     }
 }

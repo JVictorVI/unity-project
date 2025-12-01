@@ -29,12 +29,36 @@ public class FirstPersonMovement : MonoBehaviour
         if (PauseController.isPaused)
             return;
     }
+
     void FixedUpdate()
     {
         if (PauseController.isPaused)
             return;
 
-        bool segurandoCorrer = Input.GetKey(runningKey);
+        // ===========================
+        //  SUPORTE A RT PARA CORRER
+        // ===========================
+
+        bool rtPressionado = false;
+
+        // Tenta dois eixos comuns usados por RT em diferentes drivers
+        try
+        {
+            if (Input.GetAxis("Fire1") > 0.5f)
+                rtPressionado = true;
+        }
+        catch { }
+
+        try
+        {
+            //if (Input.GetAxis("TriggerRight") > 0.5f)
+              //  rtPressionado = true;
+        }
+        catch { }
+
+        // SHIFT OU RT fazem correr
+        bool segurandoCorrer = Input.GetKey(runningKey) || rtPressionado;
+
         bool temStamina = stamina.TemStamina();
 
         // Define se está correndo

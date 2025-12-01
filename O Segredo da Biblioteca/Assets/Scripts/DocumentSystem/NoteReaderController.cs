@@ -22,7 +22,7 @@ public class NoteReaderController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S) && isReading)
+        if ((Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Fire1")) && isReading)
         {
             FecharNota();
         }

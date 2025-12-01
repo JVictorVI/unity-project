@@ -158,7 +158,7 @@ public class ItemCollector : MonoBehaviour
              objectiveText.text = "Fuja do Monstro";;
         }
 
-        if (itemProximo != null && Input.GetKeyDown(KeyCode.E))
+        if (itemProximo != null && (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Fire3")))
         {
             ColetarItem(itemProximo);
         }
@@ -173,6 +173,8 @@ public class ItemCollector : MonoBehaviour
             D4.Pause();
             D5.Pause();
             D6.Pause();
+            D7.Pause();
+            DInicial.UnPause();
         } else
         {
             RadioSound.UnPause();
@@ -183,6 +185,8 @@ public class ItemCollector : MonoBehaviour
             D4.UnPause();
             D5.UnPause();
             D6.UnPause();
+            D7.UnPause();
+            DInicial.UnPause();
         }
 
         
@@ -222,35 +226,35 @@ public class ItemCollector : MonoBehaviour
         if (other.CompareTag("Item"))
         {
             itemProximo = other.gameObject;
-            overlayController.MostrarMensagem("Pressione E para coletar a página");
+            overlayController.MostrarMensagem("Pressione E/X para coletar a página");
             overlay.SetActive(true);
         }
 
         if (other.CompareTag("Radio"))
         {
             itemProximo = other.gameObject;
-            overlayController.MostrarMensagem("Pressione E para pegar o rádio");
+            overlayController.MostrarMensagem("Pressione E/X para pegar o rádio");
             overlay.SetActive(true);
         }
 
         if (other.CompareTag("Book") && collectedRadio)
         {
             itemProximo = other.gameObject;
-            overlayController.MostrarMensagem("Pressione E para pegar o livro");
+            overlayController.MostrarMensagem("Pressione E/X para pegar o livro");
             overlay.SetActive(true);
         }
 
         if (other.CompareTag("Fim") && paginasColetadas == 8)
         {
             itemProximo = other.gameObject;
-            overlayController.MostrarMensagem("Pressione E para sair");
+            overlayController.MostrarMensagem("Pressione E/X para sair");
             overlay.SetActive(true);
         }
 
         if (other.CompareTag("PrimeiroDialogo"))
         {
             itemProximo = other.gameObject;
-            overlayController.MostrarMensagem("Pressione E para falar");
+            overlayController.MostrarMensagem("Pressione E/X para falar");
             overlay.SetActive(true);
         }
 
@@ -261,7 +265,7 @@ public class ItemCollector : MonoBehaviour
         ))
         {
             itemProximo = other.gameObject;
-            overlayController.MostrarMensagem("Pressione E para abrir a porta");
+            overlayController.MostrarMensagem("Pressione E/X para abrir a porta");
             overlay.SetActive(true);
         }
 

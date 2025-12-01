@@ -22,15 +22,18 @@ public class PauseController : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !NoteReaderController.isReading)
+        // ESC ou START abrem/fecham o menu
+        bool abriuMenu = Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Start") || Input.GetButtonDown("Fire2");
+
+        if (abriuMenu && !NoteReaderController.isReading)
         {
             if (isPaused)
                 Resume();
             else
                 Pause();
         }
-
     }
+
 
     public void Resume()
     {

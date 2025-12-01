@@ -16,7 +16,7 @@ public class ObjectiveHUDController : MonoBehaviour
     {
         if (PauseController.isPaused) { return; }
         
-        if (Input.GetKeyDown(KeyCode.Tab) || showObjective)
+        if (Input.GetKeyDown(KeyCode.Tab) || showObjective || Input.GetButtonDown("Select"))
         {
             ObjectivesHUD.SetActive(true);
             StartCoroutine(DestruirApos5Segundos());

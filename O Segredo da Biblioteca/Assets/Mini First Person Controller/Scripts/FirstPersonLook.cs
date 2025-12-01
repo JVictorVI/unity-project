@@ -39,7 +39,18 @@ public class FirstPersonLook : MonoBehaviour
             return;
         
         // Mouse look
-        Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        Vector2 mouseDelta = new Vector2(
+            Input.GetAxisRaw("Mouse X"),
+            Input.GetAxisRaw("Mouse Y")
+        );
+
+        Vector2 joystickLook = new Vector2(
+            Input.GetAxis("LookHorizontal"),
+            Input.GetAxis("LookVertical")
+        );
+
+// soma ambos → funciona teclado/mouse E joystick ao mesmo tempo
+mouseDelta += joystickLook;
         Vector2 rawFrameVelocity = Vector2.Scale(mouseDelta, Vector2.one * sensitivity);
         frameVelocity = Vector2.Lerp(frameVelocity, rawFrameVelocity, 1 / smoothing);
         velocity += frameVelocity;
