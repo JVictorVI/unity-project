@@ -34,6 +34,11 @@ public class FootstepController : MonoBehaviour
     void PlayStep()
     {
         int index = Random.Range(0, footstepClips.Length);
+
+        EnemyFootstepVibration vib = GetComponent<EnemyFootstepVibration>();
+        if (vib != null)
+            vib.VibrateStep();
+
         audioSource.PlayOneShot(footstepClips[index]);
     }
 }

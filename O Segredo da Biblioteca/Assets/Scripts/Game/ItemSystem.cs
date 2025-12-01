@@ -174,7 +174,7 @@ public class ItemCollector : MonoBehaviour
             D5.Pause();
             D6.Pause();
             D7.Pause();
-            DInicial.UnPause();
+            DInicial.Pause();
         } else
         {
             RadioSound.UnPause();
@@ -294,23 +294,29 @@ public class ItemCollector : MonoBehaviour
     switch (tag)
     {
         case "Book":
+            GamepadVibration.Vibrar(0.5f, 0.2f);
             HandleBookPickup();
             break;
 
         case "Radio":
+            GamepadVibration.Vibrar(0.5f, 0.2f);
             HandleRadioPickup();
             break;
         case "Door":
+            GamepadVibration.Vibrar(0.5f, 0.2f);
             HandleDoorInteraction();
             break;
         case "Fim":
+            GamepadVibration.Vibrar(0.5f, 0.2f);
             EscolherFinais();
             break;
         case "PrimeiroDialogo":
+            GamepadVibration.Vibrar(0.5f, 0.2f);
             TocarPrimeiroDialogo();
             break;
         case "Item":   // páginas
         default:
+            GamepadVibration.Vibrar(0.5f, 0.2f);
             HandlePagePickup();
             break;
     }
@@ -364,6 +370,7 @@ public class ItemCollector : MonoBehaviour
 
     public void EscolherFinais()
     {
+        Monstro1.SetActive(false);
         D7.Play();
         StartCoroutine(EsperarAudio());
         Cursor.lockState = CursorLockMode.None;

@@ -105,6 +105,9 @@ public class EnemyAI : MonoBehaviour
         if (player != null && InChaseRange() && HasLineOfSightOrNotRequired())
         {
             lastSeenTime = Time.time;
+
+            // Vibração quando detecta o jogador
+            GamepadVibration.VibrarDupla(2f, 2f, 2f);
             
             // --- RUGIDO DE DETECÇÃO ---
             if (roarController != null)
